@@ -28,4 +28,26 @@ export function memoise<T, U>(a: T, b: U) {
   }
 }
 
-console.log(memoise<number, string>(2, "cube"));
+export function deBounce<T extends (...args: Parameters<T>) => void>(
+  func: T,
+  delay: number
+) {
+  let timer: ReturnType<typeof setTimeout>;
+  return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
+
+// const result = deBounce(() => {
+//   const res = memoise(2, "cube");
+//   console.log(res);
+// }, 1000);
+
+// result();
+// setTimeout(() => result(), 500);
+// setTimeout(() => result(), 1000);
+// setTimeout(() => result(), 1500);
