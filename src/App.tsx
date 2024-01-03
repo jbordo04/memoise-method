@@ -7,8 +7,8 @@ function App() {
   const [result, setResult] = useState<number>(0);
   const [list, setList] = useState<Data[]>([]);
 
-  function toMemoise(str: any) {
-    const value: number = str.target.value;
+  function toMemoise(event: React.ChangeEvent<HTMLInputElement>) {
+    const value: number = Number(event.target.value);
     const valueFrom = memoise(value, "square");
 
     if (valueFrom && valueFrom.length > 0) {

@@ -1,0 +1,21 @@
+name: Check Memoise Function
+
+on: push
+jobs:
+  deploy:
+    name: deploy to Github
+    runs-ons: ubuntu-latest
+    steps:
+      - uses: actions/checkout@4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@4
+        with:
+          cache: "npm"
+          node-version: "18"
+      - name: Clear Instalation of  Dependencies
+        run: npm ci
+      - name: Execute Lint
+        run: npm run lint
+      - name: Test
+        run: npm test
