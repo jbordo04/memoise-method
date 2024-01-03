@@ -1,21 +1,37 @@
 name: Check Memoise Function
 
-on: push
+#Que lo inicia o enciende y a que rama afecta
+on:
+  push:
+    branches:
+      - master
+
+#Que trabajo va a hacer
 jobs:
+  #Nombre del trabajo
   deploy:
-    name: deploy to Github
-    runs-ons: ubuntu-latest
+    #Sistema Virtual a utilizar
+    runs-on: ubuntu-latest
     steps:
+      #Comprovamos que haya un repositorio
       - uses: actions/checkout@4
         with:
           fetch-depth: 0
+
+      # Permite configurar que version de Node queremos
       - uses: actions/setup-node@4
         with:
           cache: "npm"
           node-version: "18"
+
+      # Instalamos todas las dependencia de modo claro
       - name: Clear Instalation of  Dependencies
         run: npm ci
+
+      # Ejecutamos el Lint para comprovar que cumple con las reglas de estilos
       - name: Execute Lint
         run: npm run lint
+
+      # Ejecutamos que el test sea correcto
       - name: Test
         run: npm test
