@@ -6,32 +6,29 @@ on:
     branches:
       - master
 
-#Que trabajo va a hacer
 jobs:
-  #Nombre del trabajo
   deploy:
-    #Sistema Virtual a utilizar
     runs-on: ubuntu-latest
     steps:
       #Comprovamos que haya un repositorio
-      - uses: actions/checkout@4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      # Permite configurar que version de Node queremos
-      - uses: actions/setup-node@4
+        # Permite configurar que version de Node queremos
+      - uses: actions/setup-node@v4
         with:
           cache: "npm"
           node-version: "18"
-
-      # Instalamos todas las dependencia de modo claro
-      - name: Clear Instalation of  Dependencies
+        # Instalamos todas las dependencia de modo claro
+      - name: Install dependencies
         run: npm ci
 
-      # Ejecutamos el Lint para comprovar que cumple con las reglas de estilos
-      - name: Execute Lint
-        run: npm run lint
+      - name: Build project
+        run: npm run build
 
-      # Ejecutamos que el test sea correcto
+        # Ejecutamos el Lint para comprovar que cumple con las reglas de estilos
+      - name: Ejecutar esLint
+        run: npm run eslint
+        # Ejecutamos que el test sea correcto
       - name: Test
         run: npm test
